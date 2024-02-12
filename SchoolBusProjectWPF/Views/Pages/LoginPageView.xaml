@@ -1,0 +1,31 @@
+﻿<Page x:Class="SchoolBusProjectWPF.Views.Pages.LoginPageView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:SchoolBusProjectWPF.Views.Pages"
+      xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+      mc:Ignorable="d" 
+      Name="LoginPage"
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="LoginPageView">
+
+    <Grid Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.6*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+
+        <Grid Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Image Source="../../Images/images.jpg"/>
+        </Grid>
+        <Grid Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <StackPanel Orientation="Vertical">
+                <TextBox FontWeight="DemiBold" Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}" Width="200" Height="30" Foreground="Gray"   Margin="0,0,0,20" md:HintAssist.Hint="Username"/>
+                <TextBox md:HintAssist.Hint="Password" Text="{Binding Password,UpdateSourceTrigger=PropertyChanged}" Height="30"  Foreground="Gray"  Width="200" Margin="0,0,0,20"/>
+                <Button Name="loginbtn" FontWeight="DemiBold" Content="Sign In" Width="130" Background="#ffd900"  HorizontalAlignment="Center" Margin="10" Command="{Binding LoginCommand}" CommandParameter="{Binding ElementName=LoginPage}"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Page>
