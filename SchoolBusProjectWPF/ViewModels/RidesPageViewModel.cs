@@ -131,20 +131,11 @@ namespace SchoolBusProjectWPF.ViewModels
 
 
         public void RemoveRides(object? param)
-        {
-            
-        if (SelectedRide != null)
-            {
-                try
-                {
-                    RideRepository.Remove(SelectedRide);
-                    RideRepository.SaveChanges();                 
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
+        {                
+             RideRepository.Remove(SelectedRide);
+             RideRepository.SaveChanges();
+             MessageBox.Show("Ride removed successfully");              
             }
         }
-    }
 }
+

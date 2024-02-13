@@ -60,22 +60,15 @@ namespace SchoolBusProjectWPF.ViewModels
         public CarRepository CarRepository { get; set; }
         public ICommand AddDriverCommand { get; set; }
         public ICommand EditDriverCommand { get; set; }
+       
+        public ICommand RemoveDriverCommand { get; set; }
 
         public DriverPageViewModel()
         {
             DriverRepository = new DriverRepository();
-            Drivers = new ObservableCollection<Driver>(DriverRepository.GetAll()
-                 .Select(d => new Driver
-                 {
-                     FirstName = d.FirstName,
-                     LastName = d.LastName,
-                     UserName = d.UserName,
-                     Password = d.Password,
-                     Phone = d.Phone,
-                     Car = d.Car,
-                     Licence = d.Licence
-                 }));
+            Drivers = new ObservableCollection<Driver>(DriverRepository.GetAll());             
             EditDriverCommand=new RelayCommand(EditDrivers);
+            RemoveDriverCommand = new RelayCommand(RemoveDrivers);
             AddDriverCommand = new RelayCommand(ToNewDriverWindow);
 
         }
@@ -87,7 +80,24 @@ namespace SchoolBusProjectWPF.ViewModels
                 if (SelectedDriver != null)
                 {
                     DriverRepository.Update(SelectedDriver);
+                   DriverRepository.SaveChanges();
+                    MessageBox.Show("Edited");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+        public void RemoveDrivers(object? param)
+        {
+            try
+            {
+                if (SelectedDriver != null)
+                {
+                    DriverRepository.Remove(SelectedDriver);
                     DriverRepository.SaveChanges();
+                    MessageBox.Show("Removed");
                 }
             }
             catch (Exception ex)

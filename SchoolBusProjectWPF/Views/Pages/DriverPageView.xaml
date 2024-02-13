@@ -20,7 +20,7 @@
             <Button Grid.Row="0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="60" Background="#ffa412" Content="+" FontSize="19" Padding="2" Margin="20 18 10 3" Command="{Binding AddDriverCommand}" CommandParameter="{Binding ElementName=driverpg}" />
             <TextBox materialDesign:HintAssist.Hint="Search" FontWeight="DemiBold"  Grid.Row="0" VerticalAlignment="Top" Margin="6 18 2 2" Width="100" Height="29"/>
         </StackPanel>
-        <DataGrid Grid.Row="1" Margin="5" ItemsSource="{Binding Drivers, UpdateSourceTrigger=PropertyChanged}" CanUserDeleteRows="True" AutoGenerateColumns="False">
+        <DataGrid SelectedItem="{Binding SelectedDriver, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Margin="5" ItemsSource="{Binding Drivers, UpdateSourceTrigger=PropertyChanged}" CanUserDeleteRows="True" AutoGenerateColumns="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Firstname" Binding="{Binding FirstName, UpdateSourceTrigger=PropertyChanged}" />
                 <DataGridTextColumn Header="Lastname" Binding="{Binding LastName, UpdateSourceTrigger=PropertyChanged}" Width="100"/>
@@ -32,7 +32,14 @@
                 <DataGridTemplateColumn Header="Actions">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button Width="70" Background="#ffa412" Height="30" Content="Edit" Command="{Binding DataContext.EditDriverCommand, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" CommandParameter="{Binding}"/>
+                            <Button Width="70" Background="#ffa412" Height="30" Content="Edit" Command="{Binding DataContext.EditDriverCommand, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Width="70" Background="#ffa412" Height="30" Content="Remove" Command="{Binding DataContext.RemoveDriverCommand, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>

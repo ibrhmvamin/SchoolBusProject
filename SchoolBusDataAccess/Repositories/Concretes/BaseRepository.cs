@@ -40,7 +40,7 @@ namespace SchoolBusDataAccess.Repositories.Concretes
         {
             if (entity == null) throw new ArgumentNullException("Data is null");
             var c = _dbContext?.Set<T>().FirstOrDefault(x => x.Id == entity.Id);
-            if (c != null) throw new ArgumentException("Data is null");
+            if (c == null) throw new ArgumentException("Data is null");
             _dbContext?.Set<T>().Remove(c);
         }
 
@@ -48,7 +48,7 @@ namespace SchoolBusDataAccess.Repositories.Concretes
         {
             if (id <= 0) throw new ArgumentNullException("Data is null");
             var c = _dbContext?.Set<T>().FirstOrDefault(x => x.Id == id);
-            if (c != null) throw new ArgumentException("Data is null");
+            if (c == null) throw new ArgumentException("Data is null");
             _dbContext?.Set<T>().Remove(c);
         }
 
@@ -61,7 +61,7 @@ namespace SchoolBusDataAccess.Repositories.Concretes
         {
             if (entity == null) throw new ArgumentNullException("Data is null");
             var c = _dbContext?.Set<T>().FirstOrDefault(x => x.Id == entity.Id);
-            if (c != null) throw new ArgumentException("Data is null");
+            if (c == null) throw new ArgumentException("Data is null");
             _dbContext?.Set<T>().Update(c);
         }
     }

@@ -26,12 +26,11 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Id" Binding="{Binding Id}"  />
                 <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
-                <DataGridTextColumn Header="Car" Binding="{Binding Cars.Name}"/>
+                <DataGridTextColumn Header="Car" Binding="{Binding Car.Name}"/>
                 <DataGridTemplateColumn Header="Remove" >
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button Content="Delete"  Name="deleteButton" Margin="10" Height="30" Width="30" Background="#ffa412" BorderBrush="#ffa412"
-                                    Command="{Binding Path=RemoveRideCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}"/>
+                            <Button Width="70" Background="#ffa412" Height="30" Content="Remove" Command="{Binding DataContext.RemoveRideCommand, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>

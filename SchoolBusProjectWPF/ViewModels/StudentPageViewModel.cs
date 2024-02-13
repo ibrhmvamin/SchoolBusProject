@@ -2,16 +2,26 @@
 using SchoolBusDomainLayer.Entities.Concretes;
 using SchoolBusProjectWPF.Commands;
 using SchoolBusProjectWPF.Views.Windows;
+using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Windows;
 using System.Windows.Input;
 
 namespace SchoolBusProjectWPF.ViewModels
 {
     public class StudentPageViewModel:INotifyPropertyChanged
     {
+
+    private Student _selectedStudent;
+
+    public Student SelectedStudent
+    {
+        get { return _selectedStudent; }
+        set { _selectedStudent = value; OnPropertyChanged(); }
+    }
         public void OnPropertyChanged([CallerMemberName] string? name = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
@@ -31,11 +41,14 @@ namespace SchoolBusProjectWPF.ViewModels
 
         private ObservableCollection<S_Class> _s_Class { get; set; }
         public ObservableCollection<S_Class> S_Class { get => _s_Class; set { _s_Class = value; OnPropertyChanged(); } }
-
+        public ICommand EditStudentCommand { get; set; }
+        public ICommand RemoveStudentCommand { get; set; }
         public ICommand AddStudentCommand { get; set; }
         public StudentPageViewModel()
         {
             AddStudentCommand = new RelayCommand(AddStudentPage);
+            EditStudentCommand = new RelayCommand(EditStudentInDatabase);
+            RemoveStudentCommand = new RelayCommand(RemoveStudentFromDatabase);
             StudentRepository =new StudentRepository();
             ParentRepository=new ParentRepository();
             ClassRepository=new S_ClassRepository();
@@ -65,6 +78,37 @@ namespace SchoolBusProjectWPF.ViewModels
         })
         .ToList());
 
+        }
+
+        private void EditStudentInDatabase(object? obj)
+        {
+            try
+            {
+                if (SelectedStudent != null)
+                {
+                    StudentRepository.Update(SelectedStudent);
+                    StudentRepository.SaveChanges();
+                    MessageBox.Show("Edited");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+        }
+        public void RemoveStudentFromDatabase(object? param)
+        {
+            try
+            {
+                StudentRepository.Remove(SelectedStudent);
+                StudentRepository.SaveChanges();
+                MessageBox.Show("Student deleted successfully");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         public void AddStudentPage(object? param)

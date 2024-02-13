@@ -39,7 +39,7 @@ namespace SchoolBusDataAccess.Repositories.Concretes
         {
             if (car == null) throw new ArgumentNullException("Car is null");
             var c=_dbContext?.Cars.FirstOrDefault(x => x.Id==car.Id);
-            if (c != null) throw new ArgumentException("Car is null");
+            if (c == null) throw new ArgumentException("Car is null");
             _dbContext?.Cars.Remove(c);
         }
 
@@ -47,7 +47,7 @@ namespace SchoolBusDataAccess.Repositories.Concretes
         {
             if (id <= 0) throw new ArgumentNullException("Car is null");
             var c = _dbContext?.Cars.FirstOrDefault(x => x.Id == id);
-            if (c != null) throw new ArgumentException("Car is null");
+            if (c == null) throw new ArgumentException("Car is null");
             _dbContext?.Cars.Remove(c);
         }
 
@@ -60,7 +60,7 @@ namespace SchoolBusDataAccess.Repositories.Concretes
         {
             if (car == null) throw new ArgumentNullException("Car is null");
             var c = _dbContext?.Cars.FirstOrDefault(x => x.Id == car.Id);
-            if (c != null) throw new ArgumentException("Car is null");
+            if (c == null) throw new ArgumentException("Car is null");
             _dbContext?.Cars.Update(c);
         }
 

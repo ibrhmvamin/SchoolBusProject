@@ -50,44 +50,40 @@ namespace SchoolBusProjectWPF.ViewModels
         public BaseRepository<Admin> AdminRepos { get; set; }
 
         public ICommand LoginCommand { get; set; }
-        public LoginPageViewModel() 
+        public LoginPageViewModel()
         {
-            LoginCommand = new RelayCommand(LoginToAccount,IsLoginPossible);
-            AdminRepos= new BaseRepository<Admin>();
-            
+            LoginCommand = new RelayCommand(LoginToAccount, IsLoginPossible);
+            AdminRepos = new BaseRepository<Admin>();
+
         }
 
         public bool IsLoginPossible(object? param)
         {
-            if (Username==null && Password==null) return false;
+            if (Username == null && Password == null) return false;
             return true;
         }
-      
+
 
         public void LoginToAccount(object? param)
         {
-            
-            //bool check = false;
-            //foreach(var a in AdminRepos.GetAll())
-            //{
-            //    if(Username==a.UserName &&  Password==a.Password) 
-            //    {
-            //        check = true;
-            //        var alp = new AdminLoginPageView();
-            //        alp.DataContext = new AdminLoginPageViewModel();
-            //        var p = param as Page;
-            //        p?.NavigationService.Navigate(alp);
-            //    }
-            //}
-            //if (!check)
-            //{
-            //    MessageBox.Show("Invalid username or password");
-            //}
 
-            var alp = new AdminLoginPageView();
-            alp.DataContext = new AdminLoginPageViewModel();
-            var p = param as Page;
-            p?.NavigationService.Navigate(alp);
+            bool check = false;
+            foreach (var a in AdminRepos.GetAll())
+            {
+                if (Username == a.UserName && Password == a.Password)
+                {
+                    check = true;
+                    var adminLoginPageView = new AdminLoginPageView();
+                    adminLoginPageView.DataContext = new AdminLoginPageViewModel();
+                    var page = param as Page;
+                    page?.NavigationService.Navigate(adminLoginPageView);
+                    return;
+                }
+            }
+                if (check==false)
+                {
+                    MessageBox.Show("Invalid username or password");
+                }              
         }
     }
 }

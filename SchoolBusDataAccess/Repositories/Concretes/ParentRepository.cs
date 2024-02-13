@@ -38,7 +38,7 @@ namespace SchoolBusDataAccess.Repositories.Concretes
         {
             if (Parent == null) throw new ArgumentNullException("Parent is null");
             var c = _dbContext?.Parents.FirstOrDefault(x => x.Id == Parent.Id);
-            if (c != null) throw new ArgumentException("Parent is null");
+            if (c == null) throw new ArgumentException("Parent is null");
             _dbContext?.Parents.Remove(c);
         }
 
@@ -46,7 +46,7 @@ namespace SchoolBusDataAccess.Repositories.Concretes
         {
             if (id <= 0) throw new ArgumentNullException("Parent is null");
             var c = _dbContext?.Parents.FirstOrDefault(x => x.Id == id);
-            if (c != null) throw new ArgumentException("Parent is null");
+            if (c == null) throw new ArgumentException("Parent is null");
             _dbContext?.Parents.Remove(c);
         }
 
@@ -59,7 +59,7 @@ namespace SchoolBusDataAccess.Repositories.Concretes
         {
             if (Parent == null) throw new ArgumentNullException("Parent is null");
             var c = _dbContext?.Parents.FirstOrDefault(x => x.Id == Parent.Id);
-            if (c != null) throw new ArgumentException("Parent is null");
+            if (c == null) throw new ArgumentException("Parent is null");
             _dbContext?.Parents.Update(c);
         }
 

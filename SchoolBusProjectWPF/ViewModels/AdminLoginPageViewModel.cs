@@ -11,6 +11,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
@@ -90,18 +91,53 @@ namespace SchoolBusProjectWPF.ViewModels
             }
         }
 
-        private string? _name;   
-        public string? Name
+        private string _name;
+        public string Name
         {
             get { return _name; }
             set
             {
                 _name = value;
-                OnPropertyChanged();              
+                OnPropertyChanged();
+
             }
         }
 
-        
+        private string _carname;
+        public string Carname
+        {
+            get { return _carname; }
+            set
+            {
+                _carname = value;
+                OnPropertyChanged();
+
+            }
+        }
+
+        private string _number;
+        public string Number
+        {
+            get { return _number; }
+            set
+            {
+                _number = value;
+                OnPropertyChanged();
+
+            }
+        }
+
+        private int _seatCount;
+        public int SeatCount
+        {
+            get { return _seatCount; }
+            set
+            {
+                _seatCount = value;
+                OnPropertyChanged();
+
+            }
+        }
 
 
         private ObservableCollection<Car> _car;
@@ -126,16 +162,6 @@ namespace SchoolBusProjectWPF.ViewModels
             }
         }
 
-        private int? _maxSeatCount;
-        public int? MaxSeatCount
-        {
-            get { return _maxSeatCount; }
-            set
-            {
-                _maxSeatCount = value;
-                OnPropertyChanged();
-            }
-        }      
 
         private int? _rideId;
         public int? RideId
@@ -157,6 +183,7 @@ namespace SchoolBusProjectWPF.ViewModels
         public ICommand CarCommand { get; set; }
         public ICommand AddStudentCommand { get; set; }
         public ICommand RemoveStudentCommand { get; set; }
+        public ICommand CreateRideCommand { get; set; } 
 
 
         public AdminLoginPageViewModel()
@@ -167,7 +194,8 @@ namespace SchoolBusProjectWPF.ViewModels
             DriverCommand = new RelayCommand(ToDriverPage);
             ParentCommand = new RelayCommand(ToParentPage);
             CarCommand = new RelayCommand(ToCarPage);
-            StudentRepository=new StudentRepository();
+            CreateRideCommand = new RelayCommand(CreateNewRide);
+            StudentRepository =new StudentRepository();
             Students = new ObservableCollection<Student>(StudentRepository.GetAll());
             RideRepository = new BaseRepository<Ride>();
             ParentRepository = new ParentRepository();
@@ -177,12 +205,33 @@ namespace SchoolBusProjectWPF.ViewModels
 
         }
 
-        private void RemmoveStudentsToRide(object? obj)
+        public void CreateNewRide(object? param)
+        {
+            try
+            {
+                var c = new Car();
+                var r = new Ride();
+                r.Name = Name;
+                c.Name = Carname;
+                c.Number = Number;
+                c.SeatCount = SeatCount;
+                r.Car = c;
+                RideRepository.Add(r);
+                RideRepository.SaveChanges();
+                MessageBox.Show("Added successfully");
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        public void RemmoveStudentsToRide(object? param)
         {
             ///////////////
         }
 
-        private void AddStudentsToRide(object? obj)
+        public void AddStudentsToRide(object? param)
         {
             ////////////////////    
         }

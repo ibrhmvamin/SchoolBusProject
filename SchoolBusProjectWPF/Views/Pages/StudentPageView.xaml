@@ -20,7 +20,7 @@
             <Button Grid.Row="0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="60" Background="#ffa412" Content="+" FontSize="19" Padding="2" Margin="20 18 10 3" Command="{Binding AddStudentCommand}" CommandParameter="{Binding ElementName=studentpv}" />
             <TextBox materialDesign:HintAssist.Hint="Search" FontWeight="DemiBold"  Grid.Row="0" VerticalAlignment="Top" Margin="6 18 2 2" Width="100" Height="29"/>
         </StackPanel>
-        <DataGrid Grid.Row="1" Margin="5" ItemsSource="{Binding Students, UpdateSourceTrigger=PropertyChanged}" CanUserDeleteRows="True" AutoGenerateColumns="False">
+        <DataGrid SelectedItem="{Binding SelectedStudent, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Margin="5" ItemsSource="{Binding Students, UpdateSourceTrigger=PropertyChanged}" CanUserDeleteRows="True" AutoGenerateColumns="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
                 <DataGridTextColumn Header="Firstname" Binding="{Binding Firstname, UpdateSourceTrigger=PropertyChanged}" />
@@ -28,6 +28,21 @@
                 <DataGridTextColumn Header="Home Address" Binding="{Binding HomeAddress, UpdateSourceTrigger=PropertyChanged}"/>
                 <DataGridTextColumn Header="OtherAddress" Binding="{Binding OtherAddress, UpdateSourceTrigger=PropertyChanged}"/>
                 <DataGridTextColumn Header="Class" Binding="{Binding S_ClassId, UpdateSourceTrigger=PropertyChanged}"/>
+                <DataGridTemplateColumn Header="Actions">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Width="70" Background="#ffa412" Height="30" Content="Edit" Command="{Binding DataContext.EditStudentCommand, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Width="70" Background="#ffa412" Height="30" Content="Remove" Command="{Binding DataContext.RemoveStudentCommand, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+
+                </DataGridTemplateColumn>
             </DataGrid.Columns>
                 
             

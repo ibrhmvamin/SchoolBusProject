@@ -38,7 +38,7 @@ namespace SchoolBusDataAccess.Repositories.Concretes
         {
             if (Driver == null) throw new ArgumentNullException("Driver is null");
             var c = _dbContext?.Drivers.FirstOrDefault(x => x.Id == Driver.Id);
-            if (c != null) throw new ArgumentException("Driver is null");
+            if (c == null) throw new ArgumentException("Driver is null");
             _dbContext?.Drivers.Remove(c);
         }
 
@@ -46,7 +46,7 @@ namespace SchoolBusDataAccess.Repositories.Concretes
         {
             if (id <= 0) throw new ArgumentNullException("Driver is null");
             var c = _dbContext?.Drivers.FirstOrDefault(x => x.Id == id);
-            if (c != null) throw new ArgumentException("Driver is null");
+            if (c == null) throw new ArgumentException("Driver is null");
             _dbContext?.Drivers.Remove(c);
         }
 
@@ -59,7 +59,7 @@ namespace SchoolBusDataAccess.Repositories.Concretes
         {
             if (Driver == null) throw new ArgumentNullException("Driver is null");
             var c = _dbContext?.Drivers.FirstOrDefault(x => x.Id == Driver.Id);
-            if (c != null) throw new ArgumentException("Driver is null");
+            if (c == null) throw new ArgumentException("Driver is null");
             _dbContext?.Drivers.Update(c);
         }
 

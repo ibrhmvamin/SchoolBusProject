@@ -22,7 +22,7 @@ namespace SchoolBusProjectWPF.ViewModels
             set { _selectedClass = value; OnPropertyChanged(); }
         }
         public S_ClassRepository ClassRepository { get; set; }
-        public StudentRepository StudentRepository { get; set; }
+       
 
         public void OnPropertyChanged([CallerMemberName] string? name = null)
         {
@@ -42,16 +42,7 @@ namespace SchoolBusProjectWPF.ViewModels
             }
         }
 
-        private ObservableCollection<Student> _students;
-        public ObservableCollection<Student> Students
-        {
-            get { return _students; }
-            set
-            {
-                _students = value;
-                OnPropertyChanged();
-            }
-        }
+       
 
         private string? _name;        
         public string? Name
@@ -68,39 +59,41 @@ namespace SchoolBusProjectWPF.ViewModels
         public ICommand AddClassCommand { get; set; }
        
         public ICommand EditClassCommand { get; set; }
+        public ICommand RemoveClassCommand { get; set; }
 
 
         public ClassPageViewModel()
         {
-            ClassRepository=new S_ClassRepository();
-            StudentRepository=new StudentRepository();
-            Students=new ObservableCollection<Student>(StudentRepository.GetAll()
-                .Select(s=>new Student
-                { 
-                Id=s.Id,
-                })
-                
-                );
-
-           S_Class = new ObservableCollection<S_Class>(ClassRepository.GetAll()
-               .Select(c => new S_Class
-               {
-                   Id = c.Id,
-                   Name = c.Name,
-                   CreatedAt = c.CreatedAt
-               }));
+            ClassRepository=new S_ClassRepository();          
+            S_Class = new ObservableCollection<S_Class>(ClassRepository.GetAll());              
             AddClassCommand = new RelayCommand(NewClassWindow);
             EditClassCommand = new RelayCommand(EditClass);
+            RemoveClassCommand = new RelayCommand(RemoveClass);
 
         }
+
+        public void RemoveClass(object? param)
+        {
+            try
+            {
+                ClassRepository.Remove(SelectedClass);
+                ClassRepository.SaveChanges();
+                MessageBox.Show("Class deleted successfully");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
         public void EditClass(object? param)
         {
             try
             {
                 if (SelectedClass!=null) 
                 {
-                ClassRepository.Update(SelectedClass);
-                ClassRepository.SaveChanges();
+                    ClassRepository.Update(SelectedClass);
+                    ClassRepository.SaveChanges();
                 }
             }
             catch(Exception ex)
